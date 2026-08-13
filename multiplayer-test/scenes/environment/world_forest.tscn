@@ -2,6 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://iinteii6yqlj" path="res://assets/kenney_prototype-textures/Vector/texture_08.svg" id="1_0waaa"]
 [ext_resource type="Texture2D" uid="uid://cxs5fvbcxrog" path="res://assets/kenney_prototype-textures/PNG/Green/texture_10.png" id="2_b5dff"]
+[ext_resource type="PackedScene" uid="uid://cww8t5m62gx6p" path="res://scenes/environment/ball.tscn" id="3_3pli8"]
 
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_bt0eo"]
 
@@ -80,3 +81,6 @@ environment = SubResource("Environment_b5dff")
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=762762243]
 transform = Transform3D(1, 0, 0, 0, 0.7769048, 0.62961805, 0, -0.62961805, 0.7769048, 0, 8.893927, 0)
 shadow_enabled = true
+
+[node name="Ball" parent="." unique_id=2090095273 instance=ExtResource("3_3pli8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.7707446, 0.5, -2.5022783)
