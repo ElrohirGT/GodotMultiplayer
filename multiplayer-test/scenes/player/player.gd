@@ -6,6 +6,9 @@ const JUMP_VELOCITY = 4.5
 
 @onready var camera_3d: Camera3D = %Camera3D
 @onready var head: Node3D = %Head
+@onready var nameplate: Label3D = $Nameplate
+@onready var btn_leave: Button = %btnLeave
+@onready var menu: Control = %Menu
 
 @export var sensitivity: float = 0.005
 
@@ -14,9 +17,18 @@ func _enter_tree() -> void:
 
 func _ready() -> void:
 	add_to_group("Players")
-	if is_multiplayer_authority():
-		camera_3d.current = true
-		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	nameplate.text = self.name
+	menu.hide()
+	
+	if not is_multiplayer_authority():
+		set_process(false)
+		set_physics_process(false)
+		return
+	
+	
+	camera_3d.current = true
+	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	btn_leave.pressed.connect(func(): Network.leave_server())
 
 func _physics_process(delta: float) -> void:
 	# Add the gravity.
@@ -40,18 +52,16 @@ func _physics_process(delta: float) -> void:
 
 	move_and_slide()
 
-func _input(event: InputEvent) -> void:
-	if not is_multiplayer_authority():
-		return
-	
-	if event.is_action_pressed("ui_cancel"):
-		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-
 func _unhandled_input(event: InputEvent) -> void:
-	if not is_multiplayer_authority():
-		return
-	
 	if event is InputEventMouseMotion:
 		head.rotate_y(-event.relative.x * sensitivity)
 		camera_3d.rotate_x(-event.relative.y * sensitivity)
 		camera_3d.rotation.x = clamp(camera_3d.rotation.x, deg_to_rad(-90), deg_to_rad(90))
+
+func _process(delta: float) -> void:
+	if Input.is_action_just_pressed("ui_cancel") and not menu.visible:
+		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+		menu.show()
+	elif Input.is_action_just_pressed("ui_cancel") and menu.visible:
+		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+		menu.hide()

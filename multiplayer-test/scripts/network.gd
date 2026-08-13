@@ -27,7 +27,7 @@ func on_peer_connected(peer_id: int):
 	
 func join_server():
 	multiplayer.peer_connected.connect(on_peer_connected)
-	multiplayer.peer_disconnected.connect(on_peer_connected)
+	multiplayer.peer_disconnected.connect(on_peer_disconnected)
 	multiplayer.connected_to_server.connect(on_connected_to_server)
 	enet_peer.create_client(IP_ADDRESS, PORT)
 	multiplayer.multiplayer_peer = enet_peer
@@ -53,5 +53,5 @@ func leave_server():
 
 func clean_up_signals():
 	multiplayer.peer_connected.disconnect(on_peer_connected)
-	multiplayer.peer_disconnected.disconnect(on_peer_connected)
+	multiplayer.peer_disconnected.disconnect(on_peer_disconnected)
 	multiplayer.connected_to_server.disconnect(on_connected_to_server)

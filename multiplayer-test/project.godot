@@ -18,11 +18,16 @@ config/icon="res://icon.svg"
 [autoload]
 
 Network="*uid://cc0ei8wuetrvh"
+TileRunInstancesGlobal="*uid://b6fg6pu2bfi14"
 
 [display]
 
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/tile-run-instances/plugin.cfg")
 
 [physics]
 
