@@ -65,7 +65,7 @@ func _process(delta: float) -> void:
 	elif Input.is_action_just_pressed("ui_cancel") and menu.visible:
 		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 		menu.hide()
-	elif Input.is_action_just_pressed("ui_click"):
+	elif Input.is_action_just_pressed("ui_click") and not menu.visible:
 		shoot()
 
 func shoot():
