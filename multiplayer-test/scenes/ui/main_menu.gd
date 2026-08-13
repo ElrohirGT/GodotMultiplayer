@@ -11,11 +11,13 @@ func _ready() -> void:
 	btn_quit.pressed.connect(func(): get_tree().quit())
 	
 	if OS.has_feature("server"):
+		Network.start_server()
 		add_world.call_deferred()
 	
 func on_join():
+	Network.join_server()
 	add_world()
-	add_player()
+	# add_player()
 
 func add_world():
 	var new_world = WORLD_FOREST.instantiate()

@@ -11,6 +11,14 @@ top_radius = 0.1
 bottom_radius = 0.3
 height = 0.5
 
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_8afob"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath("Head:rotation")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+
 [node name="Player" type="CharacterBody3D" unique_id=1779621973]
 script = ExtResource("1_8afob")
 
@@ -21,6 +29,7 @@ shape = SubResource("CapsuleShape3D_bt0eo")
 mesh = SubResource("CapsuleMesh_ea1tk")
 
 [node name="Head" type="Node3D" parent="." unique_id=1110075723]
+unique_name_in_owner = true
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Head" unique_id=338407648]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0.5488267, -0.52476543)
@@ -29,3 +38,6 @@ mesh = SubResource("CylinderMesh_x7p2l")
 [node name="Camera3D" type="Camera3D" parent="Head" unique_id=781253773]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=460802508]
+replication_config = SubResource("SceneReplicationConfig_8afob")
