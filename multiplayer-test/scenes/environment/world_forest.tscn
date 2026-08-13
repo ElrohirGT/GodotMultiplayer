@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://da53df76ffc3c"]
 
 [ext_resource type="Texture2D" uid="uid://iinteii6yqlj" path="res://assets/kenney_prototype-textures/Vector/texture_08.svg" id="1_0waaa"]
+[ext_resource type="Script" uid="uid://btnslpkjjy1sd" path="res://scenes/environment/world_forest.gd" id="1_1o1l2"]
 [ext_resource type="Texture2D" uid="uid://cxs5fvbcxrog" path="res://assets/kenney_prototype-textures/PNG/Green/texture_10.png" id="2_b5dff"]
 [ext_resource type="PackedScene" uid="uid://cww8t5m62gx6p" path="res://scenes/environment/ball.tscn" id="3_3pli8"]
 
@@ -33,6 +34,7 @@ background_mode = 2
 sky = SubResource("Sky_3pli8")
 
 [node name="WorldForest" type="Node3D" unique_id=1099547475]
+script = ExtResource("1_1o1l2")
 
 [node name="Floor" type="StaticBody3D" parent="." unique_id=2081243807]
 
@@ -84,3 +86,10 @@ shadow_enabled = true
 
 [node name="Ball" parent="." unique_id=2090095273 instance=ExtResource("3_3pli8")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.7707446, 0.5, -2.5022783)
+
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="." unique_id=296849495]
+_spawnable_scenes = PackedStringArray("uid://cww8t5m62gx6p")
+spawn_path = NodePath("../BallSpawnPosition")
+
+[node name="BallSpawnPosition" type="Node3D" parent="." unique_id=1580144519]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)

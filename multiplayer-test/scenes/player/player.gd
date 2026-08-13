@@ -65,3 +65,11 @@ func _process(delta: float) -> void:
 	elif Input.is_action_just_pressed("ui_cancel") and menu.visible:
 		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 		menu.hide()
+	elif Input.is_action_just_pressed("ui_click"):
+		shoot()
+
+func shoot():
+	var facing_dir = -head.transform.basis.z
+	var force = 300
+	
+	Global.shoot_ball.rpc_id(1, self.global_position, facing_dir, force)
