@@ -1,6 +1,9 @@
 [gd_scene format=3 uid="uid://sex8t1i3v61q"]
 
 [ext_resource type="Script" uid="uid://4rtk8ymddovr" path="res://scenes/player/player.gd" id="1_8afob"]
+[ext_resource type="Texture2D" uid="uid://blos3fbppe84o" path="res://addons/at-icons/node/clipboard.svg" id="2_dovo2"]
+[ext_resource type="Texture2D" uid="uid://dfehrdx4gp2g2" path="res://addons/at-icons/node/bullet.svg" id="3_gmlin"]
+[ext_resource type="Texture2D" uid="uid://cvqxa30c0gttk" path="res://addons/at-icons/node/pause.svg" id="4_lvxji"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_bt0eo"]
 
@@ -54,7 +57,6 @@ outline_size = 8
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=925901522]
 
 [node name="Menu" type="Control" parent="CanvasLayer" unique_id=1605920230]
-unique_name_in_owner = true
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -62,26 +64,85 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/Menu" unique_id=1368011725]
+[node name="PauseMenu" type="PanelContainer" parent="CanvasLayer/Menu" unique_id=1368011725]
+unique_name_in_owner = true
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Menu/PanelContainer" unique_id=55551600]
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Menu/PauseMenu" unique_id=55551600]
 layout_mode = 2
 theme_override_constants/margin_left = 20
 theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = 20
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Menu/PanelContainer/MarginContainer" unique_id=1302786991]
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Menu/PauseMenu/MarginContainer" unique_id=1302786991]
 layout_mode = 2
 
-[node name="labelSession" type="Label" parent="CanvasLayer/Menu/PanelContainer/MarginContainer/VBoxContainer" unique_id=1259102990]
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Menu/PauseMenu/MarginContainer/VBoxContainer" unique_id=1292719909]
+layout_mode = 2
+
+[node name="labelSession" type="Label" parent="CanvasLayer/Menu/PauseMenu/MarginContainer/VBoxContainer/HBoxContainer" unique_id=1259102990]
 unique_name_in_owner = true
 layout_mode = 2
+size_flags_horizontal = 3
 
-[node name="btnLeave" type="Button" parent="CanvasLayer/Menu/PanelContainer/MarginContainer/VBoxContainer" unique_id=757071312]
+[node name="btnCopySession" type="Button" parent="CanvasLayer/Menu/PauseMenu/MarginContainer/VBoxContainer/HBoxContainer" unique_id=1119874054]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/icon_max_width = 24
+icon = ExtResource("2_dovo2")
+
+[node name="btnLeave" type="Button" parent="CanvasLayer/Menu/PauseMenu/MarginContainer/VBoxContainer" unique_id=757071312]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Leave Game"
+
+[node name="move_joystick" type="VirtualJoystick" parent="CanvasLayer/Menu" unique_id=1561510741]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 60.0
+offset_bottom = -60.0
+grow_vertical = 0
+
+[node name="see_joystick" type="VirtualJoystick" parent="CanvasLayer/Menu" unique_id=2083803406]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -60.0
+offset_bottom = -60.0
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="btnFire" type="TextureButton" parent="CanvasLayer/Menu" unique_id=522434945]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -107.0
+offset_bottom = 95.0
+grow_horizontal = 0
+texture_normal = ExtResource("3_gmlin")
+stretch_mode = 5
+
+[node name="btnPause" type="Button" parent="CanvasLayer/Menu" unique_id=208926877]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -63.5
+offset_right = 63.5
+offset_bottom = 31.0
+grow_horizontal = 2
+text = "Pause Menu"
+icon = ExtResource("4_lvxji")
