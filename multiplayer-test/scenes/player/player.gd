@@ -12,6 +12,7 @@ const JUMP_VELOCITY = 4.5
 @onready var menu: Control = %PauseMenu
 @onready var label_session: Label = %labelSession
 @onready var btn_copy_session: Button = %btnCopySession
+@onready var canvas_layer: CanvasLayer = $CanvasLayer
 
 # Died Menu
 @onready var died_menu: PanelContainer = %DiedMenu
@@ -54,6 +55,7 @@ func _ready() -> void:
 	if not is_multiplayer_authority():
 		set_process(false)
 		set_physics_process(false)
+		canvas_layer.hide()
 		return
 	
 	btn_respawn.pressed.connect(reset_player)
@@ -111,7 +113,7 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 
 func _input(event: InputEvent) -> void:
-	if event is InputEventMouseMotion and not menu.visible:
+	if event is InputEventMouseMotion and not menu.visible and life > 0:
 		head.rotate_y(-event.relative.x * sensitivity)
 		camera_3d.rotate_x(-event.relative.y * sensitivity)
 		camera_3d.rotation.x = clamp(camera_3d.rotation.x, deg_to_rad(-90), deg_to_rad(90))
@@ -128,15 +130,18 @@ func loose_life():
 	life -= 1
 	if life <= 0:
 		died_menu.show()
+		menu.hide()
 		immobile = true
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 
 func reset_player():
+	print("Resetting player ", self)
 	life = initialLife
 	immobile = false
-	menu.visible = false
+	menu.hide()
+	died_menu.hide()
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-	global_position = Vector3.UP * 2
+	self.global_position = Vector3.UP * 2
 
 func shoot():
 	var facing_dir = -head.transform.basis.z
