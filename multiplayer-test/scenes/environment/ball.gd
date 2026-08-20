@@ -2,6 +2,16 @@ extends RigidBody3D
 
 class_name Ball
 
+@onready var alive_timer: Timer = %aliveTimer
+
+func _ready() -> void:
+	if not is_multiplayer_authority():
+		pass
+	alive_timer.timeout.connect(delete_ball)
+
+func delete_ball():
+	queue_free()
+
 func _on_area_3d_body_entered(body: Node3D) -> void:
 	if not is_multiplayer_authority():
 		return

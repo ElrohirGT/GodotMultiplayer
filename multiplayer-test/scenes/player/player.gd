@@ -26,7 +26,6 @@ const JUMP_VELOCITY = 4.5
 @onready var btn_jump: TextureButton = %btnJump
 @onready var btn_pause: Button = %btnPause
 
-
 @export var sensitivity: float = 0.005
 @export var mobileSensitivity: float = 0.5
 @export var initialLife = 3
