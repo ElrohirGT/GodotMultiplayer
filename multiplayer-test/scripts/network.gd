@@ -1,11 +1,31 @@
 extends Node
 
 const PLAYER = preload("uid://sex8t1i3v61q")
+const TUBE_CONTEXT = preload("uid://bskf36keh38p7")
 
 var enet_peer = ENetMultiplayerPeer.new()
+var tube_client = TubeClient.new()
+var tube_enabled = true
 
 @export var PORT = 6969
 @export var IP_ADDRESS = "127.0.0.1"
+
+func _ready() -> void:
+	if tube_enabled:
+		tube_client.context = TUBE_CONTEXT
+		get_tree().root.add_child.call_deferred(tube_client)
+	
+func tube_create():
+	multiplayer.peer_connected.connect(on_peer_connected)
+	multiplayer.peer_disconnected.connect(on_peer_disconnected)
+	tube_client.create_session()
+	on_peer_connected(1) # Peer for hosting the server
+
+func tube_join(session_id: String):
+	multiplayer.peer_connected.connect(on_peer_connected)
+	multiplayer.peer_disconnected.connect(on_peer_disconnected)
+	multiplayer.connected_to_server.connect(on_connected_to_server)
+	tube_client.join_session(session_id)
 
 func start_server():
 	multiplayer.peer_connected.connect(on_peer_connected)
@@ -15,7 +35,7 @@ func start_server():
 	multiplayer.multiplayer_peer = enet_peer
 
 func add_player(peer_id: int):
-	if peer_id == 1:
+	if peer_id == 1 and multiplayer.multiplayer_peer is ENetMultiplayerPeer:
 		return
 	
 	var new_player = PLAYER.instantiate()
@@ -45,6 +65,9 @@ func on_connected_to_server():
 	add_player(multiplayer.get_unique_id())
 
 func leave_server():
+	if tube_enabled:
+		tube_client.leave_session()
+		
 	multiplayer.multiplayer_peer.close()
 	multiplayer.multiplayer_peer = null
 	clean_up_signals()
@@ -55,3 +78,8 @@ func clean_up_signals():
 	multiplayer.peer_connected.disconnect(on_peer_connected)
 	multiplayer.peer_disconnected.disconnect(on_peer_disconnected)
 	multiplayer.connected_to_server.disconnect(on_connected_to_server)
+
+
+func _exit_tree() -> void:
+	if tube_enabled:
+		tube_client.leave_session()

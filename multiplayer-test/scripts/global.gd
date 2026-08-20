@@ -2,6 +2,7 @@ extends Node
 
 var forest: Node3D
 var spawn_container: Node3D
+var username: String
 
 const BALL = preload("uid://cww8t5m62gx6p")
 

@@ -9,6 +9,7 @@ const JUMP_VELOCITY = 4.5
 @onready var nameplate: Label3D = $Nameplate
 @onready var btn_leave: Button = %btnLeave
 @onready var menu: Control = %Menu
+@onready var label_session: Label = %labelSession
 
 @export var sensitivity: float = 0.005
 
@@ -25,7 +26,7 @@ func _ready() -> void:
 		set_physics_process(false)
 		return
 	
-	
+	label_session.text = Network.tube_client.session_id
 	camera_3d.current = true
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	btn_leave.pressed.connect(func(): Network.leave_server())
