@@ -3,6 +3,7 @@ extends Node
 var forest: Node3D
 var spawn_container: Node3D
 var username: String
+var player: Player
 
 const BALL = preload("uid://cww8t5m62gx6p")
 
@@ -13,3 +14,13 @@ func shoot_ball(position: Vector3, dir: Vector3, force: float):
 	var force_vec = dir*force
 	spawn_container.add_child(new_ball, true)
 	new_ball.apply_central_force(force_vec)
+
+@rpc("any_peer", "call_local")
+func loose_life():
+	print("Player ", player, " lost life!")
+	player.loose_life()
+
+@rpc("any_peer", "call_local")
+func reset_player():
+	print("Player ", player, " RESET!")
+	player.reset_player()

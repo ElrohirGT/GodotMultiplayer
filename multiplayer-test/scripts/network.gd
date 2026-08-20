@@ -40,6 +40,8 @@ func add_player(peer_id: int):
 	
 	var new_player = PLAYER.instantiate()
 	new_player.name = str(peer_id)
+	if peer_id == multiplayer.get_unique_id():
+		Global.player = new_player
 	get_tree().current_scene.add_child(new_player, true)
 
 func on_peer_connected(peer_id: int):

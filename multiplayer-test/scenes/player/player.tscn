@@ -21,6 +21,9 @@ properties/0/replication_mode = 1
 properties/1/path = NodePath("Head:rotation")
 properties/1/spawn = true
 properties/1/replication_mode = 1
+properties/2/path = NodePath(".:life")
+properties/2/spawn = true
+properties/2/replication_mode = 1
 
 [node name="Player" type="CharacterBody3D" unique_id=1779621973]
 collision_layer = 9
@@ -153,6 +156,48 @@ theme_override_constants/icon_max_width = 24
 icon = ExtResource("2_dovo2")
 
 [node name="btnLeave" type="Button" parent="CanvasLayer/Menu/PauseMenu/MarginContainer/VBoxContainer" unique_id=757071312]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Leave Game"
+
+[node name="DiedMenu" type="PanelContainer" parent="CanvasLayer/Menu" unique_id=1438281706]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -51.5
+offset_top = -46.5
+offset_right = 51.5
+offset_bottom = 46.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Menu/DiedMenu" unique_id=1514637382]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Menu/DiedMenu/MarginContainer" unique_id=1946876827]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/Menu/DiedMenu/MarginContainer/VBoxContainer" unique_id=611084822]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "You Died!"
+horizontal_alignment = 1
+
+[node name="btnRespawn" type="Button" parent="CanvasLayer/Menu/DiedMenu/MarginContainer/VBoxContainer" unique_id=1256845520]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Respawn"
+
+[node name="btnExit" type="Button" parent="CanvasLayer/Menu/DiedMenu/MarginContainer/VBoxContainer" unique_id=1347275037]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Leave Game"

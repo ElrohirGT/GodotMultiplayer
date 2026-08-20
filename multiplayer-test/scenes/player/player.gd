@@ -1,5 +1,6 @@
 extends CharacterBody3D
 
+class_name Player
 
 const SPEED = 5.0
 const JUMP_VELOCITY = 4.5
@@ -12,6 +13,11 @@ const JUMP_VELOCITY = 4.5
 @onready var label_session: Label = %labelSession
 @onready var btn_copy_session: Button = %btnCopySession
 
+# Died Menu
+@onready var died_menu: PanelContainer = %DiedMenu
+@onready var btn_respawn: Button = %btnRespawn
+@onready var btn_exit: Button = %btnExit
+
 # Mobile controls
 @onready var move_joystick: VirtualJoystick = %move_joystick
 @onready var see_joystick: VirtualJoystick = %see_joystick
@@ -21,6 +27,9 @@ const JUMP_VELOCITY = 4.5
 
 @export var sensitivity: float = 0.005
 @export var mobileSensitivity: float = 0.5
+@export var initialLife = 3
+
+@export var life = initialLife
 
 var immobile = false
 func _enter_tree() -> void:
@@ -30,6 +39,7 @@ func _ready() -> void:
 	add_to_group("Players")
 	nameplate.text = self.name
 	menu.hide()
+	life = initialLife
 	if OS.has_feature("mobile"):
 		move_joystick.show()
 		see_joystick.show()
@@ -46,12 +56,15 @@ func _ready() -> void:
 		set_physics_process(false)
 		return
 	
+	btn_respawn.pressed.connect(reset_player)
+	
 	btn_fire.pressed.connect(shoot)
 	btn_pause.pressed.connect(func (): open_menu(menu.visible))
 	label_session.text = Network.tube_client.session_id
 	camera_3d.current = true
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	btn_leave.pressed.connect(func(): Network.leave_server())
+	btn_exit.pressed.connect(func(): Network.leave_server())
 	btn_copy_session.pressed.connect(func(): DisplayServer.clipboard_set(Network.tube_client.session_id))
 	DisplayServer.clipboard_set(Network.tube_client.session_id)
 
@@ -104,12 +117,26 @@ func _input(event: InputEvent) -> void:
 		camera_3d.rotation.x = clamp(camera_3d.rotation.x, deg_to_rad(-90), deg_to_rad(90))
 
 func _process(delta: float) -> void:
-	if Input.is_action_just_pressed("ui_cancel"):
+	if Input.is_action_just_pressed("ui_cancel") and life > 0:
 		open_menu(menu.visible)
 	if immobile:
 		return
 	if Input.is_action_just_pressed("ui_click"):
 		shoot()
+
+func loose_life():
+	life -= 1
+	if life <= 0:
+		died_menu.show()
+		immobile = true
+		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+
+func reset_player():
+	life = initialLife
+	immobile = false
+	menu.visible = false
+	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	global_position = Vector3.UP * 2
 
 func shoot():
 	var facing_dir = -head.transform.basis.z
