@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://4rtk8ymddovr" path="res://scenes/player/player.gd" id="1_8afob"]
 [ext_resource type="Texture2D" uid="uid://blos3fbppe84o" path="res://addons/at-icons/node/clipboard.svg" id="2_dovo2"]
 [ext_resource type="Texture2D" uid="uid://dfehrdx4gp2g2" path="res://addons/at-icons/node/bullet.svg" id="3_gmlin"]
+[ext_resource type="Texture2D" uid="uid://6f2cr2chrgqb" path="res://addons/at-icons/node/arrow_up.svg" id="3_p47bc"]
 [ext_resource type="Texture2D" uid="uid://cvqxa30c0gttk" path="res://addons/at-icons/node/pause.svg" id="4_lvxji"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_bt0eo"]
@@ -72,16 +73,25 @@ action_up = &"look_up"
 action_down = &"look_down"
 metadata/_edit_use_anchors_ = true
 
-[node name="btnFire" type="TextureButton" parent="CanvasLayer/Menu" unique_id=522434945]
+[node name="btnFire" type="TextureButton" parent="CanvasLayer/Menu" unique_id=2122435507]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(100, 100)
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -107.0
-offset_bottom = 95.0
+offset_left = -20.0
+offset_bottom = 20.0
 grow_horizontal = 0
 texture_normal = ExtResource("3_gmlin")
+stretch_mode = 5
+
+[node name="btnJump" type="TextureButton" parent="CanvasLayer/Menu" unique_id=542725967]
+unique_name_in_owner = true
+layout_mode = 1
+offset_right = 100.0
+offset_bottom = 100.0
+texture_normal = ExtResource("3_p47bc")
 stretch_mode = 5
 
 [node name="btnPause" type="Button" parent="CanvasLayer/Menu" unique_id=208926877]
@@ -99,6 +109,7 @@ icon = ExtResource("4_lvxji")
 
 [node name="PauseMenu" type="PanelContainer" parent="CanvasLayer/Menu" unique_id=1368011725]
 unique_name_in_owner = true
+visible = false
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0

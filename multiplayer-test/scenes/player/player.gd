@@ -23,6 +23,7 @@ const JUMP_VELOCITY = 4.5
 @onready var move_joystick: VirtualJoystick = %move_joystick
 @onready var see_joystick: VirtualJoystick = %see_joystick
 @onready var btn_fire: TextureButton = %btnFire
+@onready var btn_jump: TextureButton = %btnJump
 @onready var btn_pause: Button = %btnPause
 
 
@@ -41,16 +42,19 @@ func _ready() -> void:
 	life = initialLife
 	nameplate.text = self.name
 	menu.hide()
+	
 	if OS.has_feature("mobile"):
 		move_joystick.show()
 		see_joystick.show()
 		btn_fire.show()
 		btn_pause.show()
+		btn_jump.show()
 	else:
 		move_joystick.hide()
 		see_joystick.hide()
 		btn_fire.hide()
 		btn_pause.hide()
+		btn_jump.hide()
 	
 	if not is_multiplayer_authority():
 		# set_process(false)
@@ -58,9 +62,9 @@ func _ready() -> void:
 		canvas_layer.hide()
 		return
 	
+	btn_fire.pressed.connect(func(): create_press_for_action("ui_click"))
+	btn_jump.pressed.connect(func(): create_press_for_action("ui_accept"))
 	btn_respawn.pressed.connect(reset_player)
-	
-	btn_fire.pressed.connect(shoot)
 	btn_pause.pressed.connect(func (): open_menu(menu.visible))
 	label_session.text = Network.tube_client.session_id
 	camera_3d.current = true
@@ -69,6 +73,11 @@ func _ready() -> void:
 	btn_exit.pressed.connect(func(): Network.leave_server())
 	btn_copy_session.pressed.connect(func(): DisplayServer.clipboard_set(Network.tube_client.session_id))
 	DisplayServer.clipboard_set(Network.tube_client.session_id)
+
+func create_press_for_action(action: String):
+	Input.action_press(action)
+	await get_tree().process_frame
+	Input.action_release(action)
 
 func open_menu(current_visibility: bool):
 	menu.visible = !current_visibility
@@ -86,7 +95,7 @@ func _physics_process(delta: float) -> void:
 		velocity += get_gravity() * delta
 
 	# Handle jump.
-	if Input.is_action_just_pressed("ui_accept") and is_on_floor():
+	if Input.is_action_just_pressed("ui_accept") and is_on_floor() and not immobile:
 		velocity.y = JUMP_VELOCITY
 
 	# Get the input direction and handle the movement/deceleration.
