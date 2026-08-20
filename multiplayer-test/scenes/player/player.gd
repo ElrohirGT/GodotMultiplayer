@@ -38,9 +38,9 @@ func _enter_tree() -> void:
 
 func _ready() -> void:
 	add_to_group("Players")
+	life = initialLife
 	nameplate.text = self.name
 	menu.hide()
-	life = initialLife
 	if OS.has_feature("mobile"):
 		move_joystick.show()
 		see_joystick.show()
@@ -53,7 +53,7 @@ func _ready() -> void:
 		btn_pause.hide()
 	
 	if not is_multiplayer_authority():
-		set_process(false)
+		# set_process(false)
 		set_physics_process(false)
 		canvas_layer.hide()
 		return
@@ -119,6 +119,9 @@ func _input(event: InputEvent) -> void:
 		camera_3d.rotation.x = clamp(camera_3d.rotation.x, deg_to_rad(-90), deg_to_rad(90))
 
 func _process(delta: float) -> void:
+	nameplate.text = "%s - %d" % [self.name, self.life]
+	if not is_multiplayer_authority():
+		return
 	if Input.is_action_just_pressed("ui_cancel") and life > 0:
 		open_menu(menu.visible)
 	if immobile:
