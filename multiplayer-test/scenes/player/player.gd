@@ -58,10 +58,11 @@ func open_menu(current_visibility: bool):
 	menu.visible = !current_visibility
 	immobile = menu.visible
 	
-	if menu.visible:
-		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-	else:
-		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	if not OS.has_feature("mobile"):
+		if menu.visible:
+			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+		else:
+			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
 func _physics_process(delta: float) -> void:
 	# Add the gravity.
@@ -89,8 +90,8 @@ func _physics_process(delta: float) -> void:
 
 	move_and_slide()
 
-func _unhandled_input(event: InputEvent) -> void:
-	if event is InputEventMouseMotion:
+func _input(event: InputEvent) -> void:
+	if event is InputEventMouseMotion and not menu.visible:
 		head.rotate_y(-event.relative.x * sensitivity)
 		camera_3d.rotate_x(-event.relative.y * sensitivity)
 		camera_3d.rotation.x = clamp(camera_3d.rotation.x, deg_to_rad(-90), deg_to_rad(90))
