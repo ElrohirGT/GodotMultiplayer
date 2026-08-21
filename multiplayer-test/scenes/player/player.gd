@@ -20,6 +20,7 @@ const JUMP_VELOCITY = 4.5
 
 
 @export var sensitivity: float = 0.005
+@export var mobileSensitivity: float = 0.5
 
 var immobile = false
 func _enter_tree() -> void:
@@ -77,6 +78,12 @@ func _physics_process(delta: float) -> void:
 	# As good practice, you should replace UI actions with custom gameplay actions.
 	var input_dir := Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
 	var direction := (head.transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
+	
+	var look_dir := Input.get_vector("look_left", "look_right", "look_up", "look_down")
+	if not immobile:
+		head.rotate_y(-look_dir.x * mobileSensitivity)
+		camera_3d.rotate_x(-look_dir.y * mobileSensitivity)
+		camera_3d.rotation.x = clamp(camera_3d.rotation.x, deg_to_rad(-90), deg_to_rad(90))
 	
 	if immobile:
 		direction = Vector3.ZERO

@@ -25,6 +25,7 @@ properties/1/replication_mode = 1
 [node name="Player" type="CharacterBody3D" unique_id=1779621973]
 collision_layer = 9
 script = ExtResource("1_8afob")
+mobileSensitivity = 0.05
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=462179071]
 shape = SubResource("CapsuleShape3D_bt0eo")
@@ -64,6 +65,63 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
+[node name="move_joystick" type="VirtualJoystick" parent="CanvasLayer/Menu" unique_id=1561510741]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.1
+anchor_top = 0.9
+anchor_right = 0.1
+anchor_bottom = 0.9
+offset_top = -100.0
+offset_right = 100.0
+grow_vertical = 0
+
+[node name="see_joystick" type="VirtualJoystick" parent="CanvasLayer/Menu" unique_id=2083803406]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.9
+anchor_top = 0.9
+anchor_right = 0.9
+anchor_bottom = 0.9
+offset_left = -100.0
+offset_top = -100.0
+grow_horizontal = 0
+grow_vertical = 0
+action_left = &"look_left"
+action_right = &"look_right"
+action_up = &"look_up"
+action_down = &"look_down"
+metadata/_edit_use_anchors_ = true
+
+[node name="btnFire" type="TextureButton" parent="CanvasLayer/Menu" unique_id=522434945]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -107.0
+offset_bottom = 95.0
+grow_horizontal = 0
+texture_normal = ExtResource("3_gmlin")
+stretch_mode = 5
+
+[node name="btnPause" type="Button" parent="CanvasLayer/Menu" unique_id=208926877]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -63.5
+offset_right = 63.5
+offset_bottom = 31.0
+grow_horizontal = 2
+text = "Pause Menu"
+icon = ExtResource("4_lvxji")
+
 [node name="PauseMenu" type="PanelContainer" parent="CanvasLayer/Menu" unique_id=1368011725]
 unique_name_in_owner = true
 layout_mode = 0
@@ -98,51 +156,3 @@ icon = ExtResource("2_dovo2")
 unique_name_in_owner = true
 layout_mode = 2
 text = "Leave Game"
-
-[node name="move_joystick" type="VirtualJoystick" parent="CanvasLayer/Menu" unique_id=1561510741]
-unique_name_in_owner = true
-layout_mode = 1
-anchors_preset = -1
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_left = 60.0
-offset_bottom = -60.0
-grow_vertical = 0
-
-[node name="see_joystick" type="VirtualJoystick" parent="CanvasLayer/Menu" unique_id=2083803406]
-unique_name_in_owner = true
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_right = -60.0
-offset_bottom = -60.0
-grow_horizontal = 0
-grow_vertical = 0
-
-[node name="btnFire" type="TextureButton" parent="CanvasLayer/Menu" unique_id=522434945]
-unique_name_in_owner = true
-layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -107.0
-offset_bottom = 95.0
-grow_horizontal = 0
-texture_normal = ExtResource("3_gmlin")
-stretch_mode = 5
-
-[node name="btnPause" type="Button" parent="CanvasLayer/Menu" unique_id=208926877]
-unique_name_in_owner = true
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -63.5
-offset_right = 63.5
-offset_bottom = 31.0
-grow_horizontal = 2
-text = "Pause Menu"
-icon = ExtResource("4_lvxji")
